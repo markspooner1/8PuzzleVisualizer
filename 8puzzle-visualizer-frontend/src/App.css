@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+input, label{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+select{
+  margin-left: 10px;
+}
+
+table{
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid #282c34;
+}
+.container{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  width: 900px;
+  height: 450px;
+  padding: 10px;
+  background-color: rgb(234, 234, 234);
+  border-radius: 10px;
+}
+
+.square{
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  border: none;
+  color: rgb(0, 2, 0);
+  display: inline-block;
+  text-align: center;
+  font-size: 50px;
+
+}
+
+button{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #282c34;
+  background-color: rgb(234, 234, 234);
+  color: #282c34;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+p, img{
+  display: inline;
+}
+
+.ImageContainer {
+  display: grid;
+  align-items: center; 
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2px;
+ }
+
+ li{
+    list-style-type: none;
+  
+    margin: 10px;
+ }
+ 
+ 
