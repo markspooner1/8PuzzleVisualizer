@@ -1,28 +1,21 @@
 .App {
   text-align: center;
+  
+  
 }
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.res1{
+  padding: 0;
+  color: red
 }
-
-input, label{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.res2{
+  padding: 0;
+  color: green
 }
-select{
-  margin-left: 10px;
+h4, select{
+  display: inline-block;
+  margin: 2px;
+  padding: 0px;
 }
-
 table{
   margin-left: auto;
   margin-right: auto;
@@ -32,13 +25,22 @@ table{
   margin-left: auto;
   margin-right: auto;
   text-align: left;
-  width: 900px;
-  height: 450px;
-  padding: 10px;
+  width: 800px;
+  height: 380px;
+  padding: 5px;
+  margin-bottom: 10px;
   background-color: rgb(234, 234, 234);
   border-radius: 10px;
-}
+  font-size: 15px;
+  border: 2px solid #282c34;
 
+}
+.header{
+  text-align: left;
+  margin-left: 40px;
+  margin-top: 10px;
+  cursor: pointer;
+}
 .square{
   width: 100px;
   height: 100px;
@@ -64,21 +66,24 @@ button{
   
 }
 
-p, img{
-  display: inline;
-}
+
 
 .ImageContainer {
   display: grid;
-  align-items: center; 
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 2px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr fr repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
  }
 
- li{
-    list-style-type: none;
-  
-    margin: 10px;
- }
- 
- 
+
+
+
+.div1 { grid-area: 1 / 2 / 2 / 3; }
+.div2 { grid-area: 1 / 3 / 2 / 4; }
+.div3 { grid-area: 1 / 4 / 2 / 5; }
+.div4 { grid-area: 2 / 2 / 3 / 5; }
+
+.spinner{
+  margin-left: 48%;
+}

@@ -37,6 +37,8 @@ class Search:
             # If goal is reached, trace path and return
             if x.isGoal():
                 return self.tracePath(x, x.depth, len(self.closed))
+            elif len(self.closed) > 3000:
+                return "No solution"
                 
             # If goal is not reached, generate children of x and add to top of stack if child is not on open or closed
             else:
@@ -56,6 +58,8 @@ class Search:
             if x.isGoal():
                 x.printPuzzle()
                 return self.tracePath(x, x.depth, len(self.closed))
+            elif len(self.closed) > 3000:
+                return "No solution"
                 
                
             
@@ -79,7 +83,8 @@ class Search:
             # if goal is reached, trace path and return
             if x.isGoal():
                 return  self.tracePath(x, x.depth, len(self.closed))
-             
+            elif len(self.closed) > 3000:
+                return "No solution"
             
             # if goal is not reached, generate children of x and add to end of queue if child is not on self.open or closed
             else:
@@ -100,8 +105,8 @@ class Search:
             if x.isGoal():
                 print("goal")
                 return self.tracePath(x, x.depth, len(self.closed))
-            #return no solution found if length of closed list is 1000
-            elif len(self.closed) > 1000:
+            #return no solution found if length of closed list is 3000
+            elif len(self.closed) > 3000:
                 return "No solution"
             # if goal is not reached, generate children of x
             else:
@@ -167,4 +172,3 @@ class Search:
 
 
         
-
