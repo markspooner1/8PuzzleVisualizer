@@ -77,6 +77,8 @@ function App() {
           </select>
         </label>
         <label>
+          {(type === "Astar" || type == "BestFS") && (
+            <>
           <h4>Select Heuristic</h4>
           <select onChange={(e) => setHueristic(e.target.value)}>
             <option value="A1">Manhattan Distance + Linear Conflicts</option>
@@ -84,6 +86,9 @@ function App() {
             <option value="PI">Permutation Inversions</option>
             <option value="HD">Hamming Distance</option>
           </select>
+          </>
+          )
+                    } 
         </label>
       </form>
       <h3>
@@ -98,7 +103,7 @@ function App() {
         <option value={2000}>2 Seconds</option>
       </select>
       {solutionWasFound === false && (
-        <div className="res1">No Solution found after 3000 nodes vistited</div>
+        <div className="res1">No Solution found after 1500 nodes vistited</div>
       )}
       {solutionWasFound === true && (
         <div className="res2">
