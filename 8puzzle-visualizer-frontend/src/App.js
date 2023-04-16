@@ -3,9 +3,10 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { TailSpin } from "react-loader-spinner";
+import { searchTypes, heuristicTypes, speedTypes } from "./Helpers/helpers";
 import { useGetSolution } from "./Hooks/useGetSolution.js";
-import Tile from "./Components/Tile";
-import Text from "./Components/Text";
+import Explanation from "./Components/Explanation";
+import Puzzle from "./Components/Puzzle";
 
 function App() {
   const [puzzle, setPuzzle] = useState([2, 8, 3, 1, 6, 4, 7, "", 5]);
@@ -65,43 +66,35 @@ function App() {
           <GitHubIcon />
         </a>
       </div>
-      <Text />
-      <form>
-        <label>
-          <h4>Select Search Algorithm</h4>
-          <select onChange={(e) => setType(e.target.value)}>
-            <option value="Astar">Astar</option>
-            <option value="BestFS">BestFS</option>
-            <option value="BFS">Breadth First Search</option>
-            <option value="DFS">Depth First Search</option>
-          </select>
-        </label>
-        <label>
-          {(type === "Astar" || type == "BestFS") && (
-            <>
+      <Explanation />
+      <h4>Select Search Algorithm</h4>
+      <select onChange={(e) => setType(e.target.value)}>
+        {searchTypes.map((type) => (
+          <option value={type.value}>{type.text}</option>
+        ))}
+      </select>
+      {(type === "Astar" || type == "BestFS") && (
+        <>
           <h4>Select Heuristic</h4>
           <select onChange={(e) => setHueristic(e.target.value)}>
-            <option value="A1">Manhattan Distance + Linear Conflicts</option>
-            <option value="MD">Manhattan Distance</option>
-            <option value="PI">Permutation Inversions</option>
-            <option value="HD">Hamming Distance</option>
+            {heuristicTypes.map((type) => (
+              <option value={type.value}>{type.text}</option>
+            ))}
           </select>
-          </>
-          )
-                    } 
-        </label>
-      </form>
+        </>
+      )}
+      <h4>set animation speed</h4>
+      <select onChange={(e) => setSpeedOfAnimation(e.target.value)}>
+        {speedTypes.map((type) => (
+          <option value={type.value}>{type.text}</option>
+        ))}
+      </select>
+
       <h3>
         Set the 8-puzzle by clicking on a box and changing its value <br /> (For
         the blank tile leave the input empty)
       </h3>
-      <h4>set animation speed</h4>
-      <select onChange={(e) => setSpeedOfAnimation(e.target.value)}>
-        <option value={250}>1/4 Second</option>
-        <option value={500}>1/2 Second </option>
-        <option value={1000}>1 Second</option>
-        <option value={2000}>2 Seconds</option>
-      </select>
+
       {solutionWasFound === false && (
         <div className="res1">No Solution found after 1500 nodes vistited</div>
       )}
@@ -110,6 +103,7 @@ function App() {
           Solution found, length of solution path: {lengthOfSolution}
         </div>
       )}
+
       {isLoading && <h3>Searching for solution...</h3>}
       <div className="spinner">
         <TailSpin
@@ -121,30 +115,7 @@ function App() {
           visible={isLoading}
         />
       </div>
-      <table>
-        <tbody>
-          {puzzle
-            .reduce(
-              (rows, _, index) =>
-                index % 3 === 0
-                  ? [...rows, puzzle.slice(index, index + 3)]
-                  : rows,
-              []
-            )
-            .map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((value, colIndex) => (
-                  <Tile
-                    rowIndex={rowIndex}
-                    colIndex={colIndex}
-                    value={value}
-                    setPuzzle={setPuzzle}
-                  />
-                ))}
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <Puzzle puzzle={puzzle} setPuzzle={setPuzzle} />
       <button type="submit" onClick={handleSolutionClick}>
         Solve
       </button>
