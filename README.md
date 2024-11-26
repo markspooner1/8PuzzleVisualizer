@@ -2,11 +2,10 @@
 8-Puzzle solver using informed and uninformed search algorithms
 [[https://eightpuzzle.onrender.com/]
 ](https://master.dd2ctmihaoa4g.amplifyapp.com/)
-**Tech Stack:**
 
-![reactjs](https://badges.aleen42.com/src/react.svg)&nbsp;
-![Flask](https://img.icons8.com/ios/50/null/flask.png)&nbsp;
-![Python](https://badges.aleen42.com/src/python.svg)&nbsp;
+Tech Stack:
+
+React, Python, Flask
 
 
 ## Preview
