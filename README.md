@@ -1,7 +1,7 @@
 # 8PuzzleVisualizer
 8-Puzzle solver using informed and uninformed search algorithms
-[https://eightpuzzle.onrender.com/]
-
+[[https://eightpuzzle.onrender.com/]
+](https://master.dd2ctmihaoa4g.amplifyapp.com/)
 **Tech Stack:**
 
 ![reactjs](https://badges.aleen42.com/src/react.svg)&nbsp;
