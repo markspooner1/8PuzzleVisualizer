@@ -1,7 +1,9 @@
+import styles from "../styles/Puzzle.module.css";
 import Tile from "./Tile";
+
 const Puzzle = ({ puzzle, setPuzzle }) => {
   return (
-    <table>
+    <table className={styles.puzzleGrid}>
       <tbody>
         {puzzle
           .reduce(
@@ -15,6 +17,7 @@ const Puzzle = ({ puzzle, setPuzzle }) => {
             <tr key={rowIndex}>
               {row.map((value, colIndex) => (
                 <Tile
+                  key={`${rowIndex}-${colIndex}`}
                   rowIndex={rowIndex}
                   colIndex={colIndex}
                   value={value}

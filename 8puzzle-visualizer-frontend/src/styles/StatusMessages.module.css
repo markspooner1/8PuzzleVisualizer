@@ -1,0 +1,23 @@
+.success {
+  padding: 10px;
+  color: #27ae60;
+  background-color: #e8f6e9;
+  border-radius: 6px;
+  margin: 10px auto;
+  max-width: 400px;
+}
+
+.error {
+  padding: 10px;
+  color: #e74c3c;
+  background-color: #fde8e7;
+  border-radius: 6px;
+  margin: 10px auto;
+  max-width: 400px;
+}
+
+.loading {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}

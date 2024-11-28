@@ -1,58 +1,61 @@
 import "./App.css";
-
 import React, { useState, useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { TailSpin } from "react-loader-spinner";
-import { searchTypes, heuristicTypes, speedTypes } from "./Helpers/helpers";
+import { puzzles } from "./Helpers/helpers";
 import { useGetSolution } from "./Hooks/useGetSolution.js";
 import Explanation from "./Components/Explanation";
 import Puzzle from "./Components/Puzzle";
+import Controls from "./Components/Controls";
+import StatusMessages from "./Components/StatusMessages";
+import ActionButtons from "./Components/ActionButtons";
 
 function App() {
   const [puzzle, setPuzzle] = useState([2, 8, 3, 1, 6, 4, 7, "", 5]);
   const [type, setType] = useState("Astar");
-  const [heuristic, setHueristic] = useState("MD");
-  const [speefOfAnimation, setSpeedOfAnimation] = useState(250);
-
-  const [solutionWasFound, setSolutionWasFound] = useState(null);
-  const [lengthOfSolution, setLengthOfSolution] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [heuristic, setHeuristic] = useState("MD");
+  const [speedOfAnimation, setSpeedOfAnimation] = useState(250);
+  const [solutionState, setSolutionState] = useState({
+    wasFound: null,
+    length: null,
+    sequence: null,
+    isLoading: null,
+  });
 
   const { handleSolution } = useGetSolution();
 
   const handleSolutionClick = async () => {
-    setSolutionWasFound(null);
-    setIsLoading(true);
+    setSolutionState((prev) => ({ ...prev, wasFound: null, isLoading: true }));
     const solution = await handleSolution(puzzle, type, heuristic);
-    setIsLoading(false);
+
     if (solution.solution_sequence !== "No solution") {
-      setSolutionWasFound(true);
-      setLengthOfSolution(solution.solution_sequence.length);
+      setSolutionState({
+        wasFound: true,
+        length: solution.solution_sequence.length,
+        sequence: solution.solution_sequence,
+        isLoading: false,
+      });
       animateSolution(solution.solution_sequence);
     } else {
-      setSolutionWasFound(false);
+      setSolutionState({
+        wasFound: false,
+        length: null,
+        sequence: puzzle,
+        isLoading: false,
+      });
     }
   };
-  const animateSolution = (sol) => {
-    console.log(sol);
-    sol.map((value, index) => {
+
+  const animateSolution = (sequence) => {
+    sequence.forEach((value, index) => {
       setTimeout(() => {
         setPuzzle(value);
-      }, index * speefOfAnimation);
+      }, index * speedOfAnimation);
     });
   };
 
-  const shuffleArray = (array) => {
-    setSolutionWasFound(null);
-    const newArray = [...array];
-    const compareRandom = () => Math.random() - 0.5;
-    newArray.sort(compareRandom);
-    return newArray;
-  };
-
   const handleShuffle = () => {
-    const shuffledNumbers = shuffleArray(puzzle);
-    setPuzzle(shuffledNumbers);
+    const randomIndex = Math.floor(Math.random() * puzzles.length);
+    setPuzzle(puzzles[randomIndex]);
   };
 
   useEffect(() => {
@@ -67,61 +70,32 @@ function App() {
         </a>
       </div>
       <Explanation />
-      <h4>Select Search Algorithm</h4>
-      <select onChange={(e) => setType(e.target.value)}>
-        {searchTypes.map((type) => (
-          <option value={type.value}>{type.text}</option>
-        ))}
-      </select>
-      {(type === "Astar" || type == "BestFS") && (
-        <>
-          <h4>Select Heuristic</h4>
-          <select onChange={(e) => setHueristic(e.target.value)}>
-            {heuristicTypes.map((type) => (
-              <option value={type.value}>{type.text}</option>
-            ))}
-          </select>
-        </>
-      )}
-      <h4>set animation speed</h4>
-      <select onChange={(e) => setSpeedOfAnimation(e.target.value)}>
-        {speedTypes.map((type) => (
-          <option value={type.value}>{type.text}</option>
-        ))}
-      </select>
 
-      <h3>
-        Set the 8-puzzle by clicking on a box and changing its value <br /> (For
-        the blank tile leave the input empty)
-      </h3>
+      <Controls
+        type={type}
+        setType={setType}
+        heuristic={heuristic}
+        setHeuristic={setHeuristic}
+        speedOfAnimation={speedOfAnimation}
+        setSpeedOfAnimation={setSpeedOfAnimation}
+      />
 
-      {solutionWasFound === false && (
-        <div className="res1">No Solution found after 1500 nodes vistited</div>
-      )}
-      {solutionWasFound === true && (
-        <div className="res2">
-          Solution found, length of solution path: {lengthOfSolution}
-        </div>
-      )}
+      <div className="puzzle-section">
+        <h3>
+          Set the 8-puzzle by clicking on a box and changing its value
+          <br />
+          (For the blank tile leave the input empty)
+        </h3>
 
-      {isLoading && <h3>Searching for solution...</h3>}
-      <div className="spinner">
-        <TailSpin
-          height="50"
-          width="50"
-          color="#4fa94d"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          visible={isLoading}
+        <StatusMessages solutionState={solutionState} />
+        <Puzzle puzzle={puzzle} setPuzzle={setPuzzle} />
+        <ActionButtons
+          handleSolutionClick={handleSolutionClick}
+          handleShuffle={handleShuffle}
+          solutionState={solutionState}
+          setPuzzle={setPuzzle}
         />
       </div>
-      <Puzzle puzzle={puzzle} setPuzzle={setPuzzle} />
-      <button type="submit" onClick={handleSolutionClick}>
-        Solve
-      </button>
-      <button type="submit" onClick={handleShuffle}>
-        Shuffle
-      </button>
     </div>
   );
 }

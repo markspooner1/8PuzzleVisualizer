@@ -1,6 +1,8 @@
-export const useGetSolution =  () => {
+export const useGetSolution = () => {
   const handleSolution = async (puzzle, type, heuristic) => {
-      const response = await fetch("http://127.0.0.1:5000/solve", {
+    const response = await fetch(
+      "https://h2ki6up89b.us-east-1.awsapprunner.com/solve",
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -11,10 +13,10 @@ export const useGetSolution =  () => {
           type: type,
           heuristic: heuristic,
         }),
-      });
-      const data = await response.json();
-      return data;
-      
-    };
-    return { handleSolution };
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+  return { handleSolution };
 };
